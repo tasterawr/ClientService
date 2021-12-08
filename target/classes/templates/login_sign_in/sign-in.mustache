@@ -1,0 +1,70 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/sign-in.css">
+</head>
+<body>
+<header class="header">
+    <h1>Регистрация</h1>
+</header>
+<main class="container">
+    <div class="center">
+        <form action="sign-in" method="post">
+            <div class="input-wrapper">
+                <label>Имя</label>
+                <input class="field" type="text" name="firstName" required/>
+            </div>
+            <div class="input-wrapper">
+                <label>Фамилия</label>
+                <input class="field" type="text" name="lastName" required/>
+            </div>
+            <div class="input-wrapper">
+                <label>E-mail</label>
+                <input class="field" type="email" name="email" required/>
+            </div>
+            <div class="input-wrapper">
+                <label>Логин</label>
+                <input class="field" type="text" name="username" required/>
+            </div>
+            <div class="input-wrapper">
+                <label>Телефон</label>
+                <input class="field" type="text" name="phone" required/>
+            </div>
+            <div class="input-wrapper">
+                <label>Пароль</label>
+                <input class="field" type="password" name="password" required/>
+            </div>
+            <fieldset class="paidtypes-fieldset" >
+                <legend class="legend">Выберите способы оплаты</legend>
+                <div class="paidtype-text-block">
+                    {{#paidTypes}}
+                        <div class="checkbox-wrapper" >
+                            <label>{{name}}</label>
+                            <input class="checkbox" type="checkbox" name="{{id}}" style=""/>
+                        </div>
+                    {{/paidTypes}}
+                </div>
+            </fieldset>
+            <fieldset class="address-fieldset" >
+                <legend class="legend">Укажите адрес</legend>
+                <div class="input-wrapper">
+                    <input class="field" type="text" name="country" placeholder="Страна" required/>
+                </div>
+                <div class="input-wrapper">
+                    <input class="field" type="text" name="state" placeholder="Область/штат/регион" required/>
+                </div>
+                <div class="input-wrapper">
+                    <input class="field" type="text" name="city" placeholder="Город" required/>
+                </div>
+            </fieldset>
+            <input class="submit" type="submit" value="Зарегистрироваться"/>
+        </form>
+
+    </div>
+</main>
+</body>
+</html>

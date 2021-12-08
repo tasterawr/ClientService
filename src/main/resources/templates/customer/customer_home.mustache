@@ -1,0 +1,90 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/customer-page.css">
+</head>
+<body>
+<header class="header">
+    <h2 class="header-title">Профиль пользователя {{customerInfo.username}}</h2>
+    <a href="#" class="navlink" target="_blank">Каталог</a>
+    <a href="/home" class="navlink" target="_blank">Профиль</a>
+    <a href="#" class="navlink" target="_blank">Корзина</a>
+</header>
+<main class="container">
+    <div class="info">
+        <div class="general-field">
+            <label class="field">Имя:</label>
+            <label class="field-value" id="field-name-value">{{customerInfo.firstName}}</label>
+            <i class="fas fa-pen" id="edit-name-icon"></i>
+            <form class="info-form" id="name-form" action="/update-info?param=firstName" method="post" target="hiddenFrame">
+                <input class="input-field hidden" id="name-input" type="text" name="newValue" placeholder="Новое имя" required/>
+                <input class="update-info hidden" id="update-name-btn" type="submit" name="firstName" value="Сохранить"/>
+            </form>
+        </div>
+        <div class="general-field">
+            <label class="field">Фамилия:</label>
+            <label class="field-value" id="field-lastname-value">{{customerInfo.lastName}}</label>
+            <i class="fas fa-pen" id="edit-lastname-icon"></i>
+            <form class="info-form" id="lastname-form" action="/update-info?param=lastName" method="post" target="hiddenFrame">
+                <input class="input-field hidden" id="lastname-input" type="text" name="newValue" placeholder="Новая фамилия" required/>
+                <input class="update-info hidden" id="update-lastname-btn" type="submit" name="lastName" value="Сохранить"/>
+            </form>
+        </div>
+        <div class="general-field">
+            <label class="field">Адрес:</label>
+            <label class="field-value" id="field-address-value">{{#address}} {{.}} {{/address}}</label>
+            <i class="fas fa-pen"></i>
+        </div>
+        </а>
+        <fieldset class="info-fieldset">
+            <legend class="legend">Контактная информация</legend>
+            <div class="fieldset-inner-block">
+                <div class="fieldset-field">
+                    <label class="field">Телефон:</label>
+                    <label class="field-value">{{customerInfo.phone}}</label>
+                    <i class="fas fa-pen" id="edit-phone-icon"></i>
+                    <form class="info-form" id="phone-form" action="/update-info?param=phone" method="post" target="hiddenFrame">
+                        <input class="input-field hidden" id="phone-input" type="text" name="newValue" placeholder="Новый телефон" required/>
+                        <input class="update-info hidden" id="update-phone-btn" type="submit" name="lastName" value="Сохранить"/>
+                    </form>
+                </div>
+                <div class="fieldset-field">
+                    <label class="field">E-mail:</label>
+                    <label class="field-value">{{customerInfo.email}}</label>
+                    <i class="fas fa-pen" id="edit-email-icon"></i>
+                    <form class="info-form" id="email-form" action="/update-info?param=email" method="post" target="hiddenFrame">
+                        <input class="input-field hidden" id="email-input" type="email" name="newValue" placeholder="Новый E-mail" required/>
+                        <input class="update-info hidden" id="update-email-btn" type="submit" name="lastName" value="Сохранить"/>
+                    </form>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="info-fieldset" >
+            <legend class="legend">Логин и пароль</legend>
+            <div class="fieldset-inner-block">
+                <div class="fieldset-field">
+                    <label class="field">Логин:</label>
+                    <label class="field-value">{{customerInfo.username}}</label>
+                    <i class="fas fa-pen" id="edit-username-icon"></i>
+                    <form class="info-form" id="username-form" action="/update-info?param=username" method="post" target="hiddenFrame">
+                        <input class="input-field hidden" id="username-input" type="text" name="newValue" placeholder="Новый логин" required/>
+                        <input class="update-info hidden" id="update-username-btn" type="submit" name="lastName" value="Сохранить"/>
+                    </form>
+                </div>
+                <div class="fieldset-field">
+                    <label class="field">Пароль</label>
+                    <i class="fas fa-pen" id="edit-password-icon"></i>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</main>
+<iframe name="hiddenFrame" width="0" height="0" border="0" hidden></iframe>
+<script src="https://kit.fontawesome.com/acdc25dc25.js" crossorigin="anonymous"></script>
+<script src="js/customer_home.js"></script>
+</body>
+</html>
