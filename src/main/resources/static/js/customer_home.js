@@ -22,3 +22,7 @@ document.getElementById("edit-email-icon").addEventListener("click", function() 
 document.getElementById("edit-username-icon").addEventListener("click", function() {
     editParameter("username")
 });
+
+document.getElementById("edit-password-icon").addEventListener("click", function() {
+    editParameter("password")
+});

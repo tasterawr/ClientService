@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.loktevik.netcracker.controllers.dto.CustomerInfoDto;
 import org.loktevik.netcracker.controllers.dto.PaidTypeDto;
 import org.loktevik.netcracker.controllers.dto.UserLoginDto;
+import org.loktevik.netcracker.controllers.utils.URLProvider;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +26,12 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class EntryController {
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     @GetMapping("/sign-in")
     public ModelAndView signInPage(){
-        String url = "http://localhost:8081/paidtypes";
+        String url = URLProvider.getCustomerServiceUrl() + "/paidtypes";
+        System.out.println(url);
         List<PaidTypeDto> paidTypeDtos = restTemplate.getForObject(url, List.class);
         ModelAndView model = new ModelAndView("login_sign_in/sign-in");
         model.addObject("paidTypes", paidTypeDtos);
@@ -51,7 +53,7 @@ public class EntryController {
                 request.getParameter("state"),
                 request.getParameter("city")
         });
-        String url = "http://localhost:8081/paidtypes";
+        String url = URLProvider.getCustomerServiceUrl() + "/paidtypes";
         List<LinkedHashMap> paidTypeDtos = restTemplate.getForObject(url, List.class);
         List<String> paidTypeNames = new ArrayList<>();
 
@@ -62,7 +64,7 @@ public class EntryController {
         }
         info.setPaidTypes(paidTypeNames.toArray(new String[0]));
         HttpEntity<CustomerInfoDto> nextRequest = new HttpEntity<>(info);
-        url = "http://localhost:8081/customers";
+        url = URLProvider.getCustomerServiceUrl() + "/customers";
         restTemplate.postForLocation(url, nextRequest, String.class);
 
         response.sendRedirect("/sign-in/success");
@@ -76,16 +78,16 @@ public class EntryController {
 
     @GetMapping("/login")
     public ModelAndView logInPage(){
+        System.out.println("LOGIN mapping");
         return new ModelAndView("login_sign_in/log-in");
     }
 
     @PostMapping("/login")
     public String doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Cookie[] cookies = request.getCookies();
         UserLoginDto userLoginDto = new UserLoginDto(request.getParameter("username"), request.getParameter("password"));
         HttpEntity<UserLoginDto> nextRequest = new HttpEntity<>(userLoginDto);
 
-        String url = "http://localhost:8081/login";
+        String url = URLProvider.getCustomerServiceUrl() + "/login";
         ResponseEntity<String> postResponse = restTemplate.postForEntity(url, nextRequest, String.class);
         JSONObject jsonObject = new JSONObject(postResponse.getBody());
         response.addCookie(new Cookie("access_token", jsonObject.getString("access_token")));

@@ -1,0 +1,106 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/catalogue-page.css">
+</head>
+<body>
+<header class="header">
+    <div class="first-row">
+        <small class="small">Вы вошли как {{customerInfo.username}}</small>
+        <small><a href="/logout" id="logout-link">Выйти</a></small>
+    </div>
+    <div class="second-row">
+        <h2 class="header-title">Каталог товаров</h2>
+        <a href="/catalogue" class="navlink" target="">Каталог</a>
+        <a href="/home" class="navlink" target="">Профиль</a>
+        <a href="/basket" class="navlink" target="">Корзина</a>
+    </div>
+</header>
+<main id ="main-container" class="container">
+    <div class="filter-block">
+        <div class="filter-block-content">
+            <label>Фильтровать:</label>
+            <div class="select-option">
+                <label>По категории:</label>
+                <select class="filter" id="select-by-category">
+                    <option selected>Все</option>
+                    {{#categories}}
+                        <option>{{name}}</option>
+                    {{/categories}}
+                </select>
+            </div>
+            <div class="select-option">
+                <label>По типу оплаты:</label>
+                <select class="filter" id="select-by-paidtype">
+                    <option selected>Все</option>
+                    {{#paidtypes}}
+                        <option>{{name}}</option>
+                    {{/paidtypes}}
+                </select>
+            </div>
+            <div class="select-option">
+                <label>По цене: от </label>
+                <input class="input-field filter" id="min-price-input" type="number" placeholder="Мин. цена" min="0" required/>
+                <label>до </label>
+                <input class="input-field filter" id="max-price-input" type="number" placeholder="Макс. цена" min="0" required/>
+            </div>
+            <input class="apply-filters-btn" id="apply-filters-btn" type="submit" name="lastName" value="Применить"/>
+        </div>
+    </div>
+
+    {{#offers}}
+        <div class="products-block">
+            <div class="product-block-content">
+                <img src="img/bicycle-img.jpg" width="200">
+                    <div class="product-info">
+                        <form action="/create-order" method="post" target="hiddenFrame">
+                        <div class="product-field">
+                            <label class="product-field">Наименование товара:</label>
+                            <label class="product-field-value name-value">{{name}}</label>
+                        </div>
+                        <div class="product-field">
+                            <label class="product-field">Цена:</label>
+                            <label class="product-field-value price-value">{{price}} руб.</label>
+                        </div>
+                        <div class="product-field">
+                            <label class="product-field">Категория:</label>
+                            <label class="product-field-value category-value">{{category}}</label>
+                        </div>
+                        <div class="product-field">
+                            <label class="product-field">Тип оплаты:</label>
+                            <label class="product-field-value paidtype-value">{{paidType}}</label>
+                        </div>
+                        <div class="product-field">
+                            <label class="product-field">Количество:</label>
+                            <input class="input-field amount-input" id="lastname-input" value="1" type="number" min="1" name="amount" placeholder="Количество" required/>
+                        </div>
+                        <div class="product-field">
+                            <input class="add-to-basket-btn" type="submit" name="lastName" value="Добавить в корзину"/>
+                        </div>
+                        <input value="{{id}}" type="text" min="1" name="offerId" hidden/>
+                        </form>
+                    </div>
+                <div class="product-characteristics">
+                    <div class="product-field">
+                        <label class="product-field">Характеристики товара</label>
+                    </div>
+                    {{#characteristics}}
+                        <div class="product-field">
+                            <label class="product-field">{{name}}:</label>
+                            <label class="product-field-value">{{description}}</label>
+                        </div>
+                    {{/characteristics}}
+                </div>
+            </div>
+        </div>
+    {{/offers}}
+</main>
+<iframe name="hiddenFrame" width="0" height="0" border="0" hidden></iframe>
+<script src="https://kit.fontawesome.com/acdc25dc25.js" crossorigin="anonymous"></script>
+<script src="/js/catalogue-filter.js"></script>
+</body>
+</html>

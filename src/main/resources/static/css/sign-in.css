@@ -71,6 +71,10 @@ input[type="submit"]:hover {
     display: table-cell;
 }
 
+.input-wrapper input{
+
+}
+
 .field {
     display: table-cell;
     width: 100%;

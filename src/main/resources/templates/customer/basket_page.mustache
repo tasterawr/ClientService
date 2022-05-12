@@ -1,0 +1,76 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/basket-page.css">
+</head>
+<body>
+<header class="header">
+    <div class="first-row">
+        <small class="small">Вы вошли как {{customerInfo.username}}</small>
+        <small><a href="/logout" id="logout-link">Выйти</a></small>
+    </div>
+    <div class="second-row">
+        <h2 class="header-title">Корзина пользователя {{customerInfo.username}}</h2>
+        <a href="/catalogue" class="navlink" target="">Каталог</a>
+        <a href="/home" class="navlink" target="">Профиль</a>
+        <a href="/basket" class="navlink" target="">Корзина</a>
+    </div>
+</header>
+<main id ="main-container" class="container">
+        {{#orders}}
+            <div class="orders-block">
+                <div class="order-block-content">
+                    <div class="order-info">
+                            <div class="order-field">
+                                <label class="order-field">{{name}}</label>
+                            </div>
+                            <div class="order-field">
+                                <label class="order-field">Наименование товара:</label>
+                                <label class="order-field-value price-value">{{offerName}}</label>
+                            </div>
+                            <div class="order-field">
+                                <label class="order-field">Количество единиц товара:</label>
+                                <label class="order-field-value price-value">{{amount}}</label>
+                            </div>
+                            <div class="order-field">
+                                <label class="order-field">К оплате:</label>
+                                <label class="order-field-value price-value">{{fullPrice}} руб.</label>
+                            </div>
+                            <div class="order-field">
+                                <label class="order-field">Дата и время доставки:</label>
+                                <label class="order-field-value category-value">{{deliveryTime}}</label>
+                            </div>
+                            <div class="last-field">
+                                <label class="order-field">Статус доставки:</label>
+                                <label class="order-field-value paidtype-value">{{status}}</label>
+                            </div>
+                            {{#isPaid}}
+                            {{/isPaid}}
+                            {{^isPaid}}
+                            <form action="/payment" method="post">
+                                <div class="button-field">
+                                    <input class="ui-button" type="submit" value="Перейти к оформлению"/>
+                                    <input value="{{orderId}} {{offerId}}" type="text" min="1" name="orderInfo" hidden/>
+                                </div>
+                            </form>
+                            <form action="/delete-order" method="post" target="hiddenFrame">
+                                <div class="button-field">
+                                    <input class="ui-button" type="submit" value="Отменить заказ"/>
+                                    <input value="{{orderId}} {{offerId}}" type="text" min="1" name="orderInfo" hidden/>
+                                </div>
+                            </form>
+                            {{/isPaid}}
+                    </div>
+                </div>
+            </div>
+        {{/orders}}
+</main>
+<iframe name="hiddenFrame" width="0" height="0" border="0" hidden></iframe>
+<script src="https://kit.fontawesome.com/acdc25dc25.js" crossorigin="anonymous"></script>
+<script src="/js/catalogue-filter.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/payment-page.css">
+</head>
+<body>
+<header class="header">
+    <div class="first-row">
+        <small class="small">Вы вошли как {{customerInfo.username}}</small>
+        <small><a href="/logout" id="logout-link">Выйти</a></small>
+    </div>
+    <div class="second-row">
+        <h2 class="header-title">Оформление заказа</h2>
+        <a href="/catalogue" class="navlink" target="">Каталог</a>
+        <a href="/home" class="navlink" target="">Профиль</a>
+        <a href="/basket" class="navlink" target="">Корзина</a>
+    </div>
+</header>
+<main id ="main-container" class="container">
+    <div class="orders-block">
+        <div class="order-block-content">
+            <div class="order-info">
+                <div class="order-field">
+                    <h2>Заказ успешно оформлен!</h2>
+                </div>
+                <form action="/basket" method="get">
+                    <div class="button-field">
+                        <input class="ui-button" type="submit" value="Вернуться в корзину"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<iframe name="hiddenFrame" width="0" height="0" border="0" hidden></iframe>
+<script src="https://kit.fontawesome.com/acdc25dc25.js" crossorigin="anonymous"></script>
+<script src="/js/catalogue-filter.js"></script>
+</body>
+</html>

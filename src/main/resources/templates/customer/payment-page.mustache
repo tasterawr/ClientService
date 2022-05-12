@@ -1,0 +1,64 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Service</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/payment-page.css">
+</head>
+<body>
+<header class="header">
+    <div class="first-row">
+        <small class="small">Вы вошли как {{customerInfo.username}}</small>
+        <small><a href="/logout" id="logout-link">Выйти</a></small>
+    </div>
+    <div class="second-row">
+        <h2 class="header-title">Оформление заказа</h2>
+        <a href="/catalogue" class="navlink" target="">Каталог</a>
+        <a href="/home" class="navlink" target="">Профиль</a>
+        <a href="/basket" class="navlink" target="">Корзина</a>
+    </div>
+</header>
+<main id ="main-container" class="container">
+    <div class="orders-block">
+        <div class="order-block-content">
+            <div class="order-info">
+                <div class="order-field">
+                    <label class="order-field">{{order.name}}</label>
+                </div>
+                <div class="order-field">
+                    <label class="order-field">Наименование товара:</label>
+                    <label class="order-field-value price-value">{{offer.name}}</label>
+                </div>
+                <div class="order-field">
+                    <label class="order-field">Количество единиц товара:</label>
+                    <label class="order-field-value price-value">{{order.amount}}</label>
+                </div>
+                <div class="order-field">
+                    <label class="order-field">К оплате:</label>
+                    <label class="order-field-value price-value">{{order.fullPrice}} руб.</label>
+                </div>
+                <div class="order-field">
+                    <label class="order-field">Дата и время доставки:</label>
+                    <label class="order-field-value category-value">{{order.deliveryTime}}</label>
+                </div>
+                <div class="order-field">
+                    <label class="order-field">Способ оплаты:</label>
+                    <label class="order-field-value category-value">{{offer.paidType}}</label>
+                </div>
+                <form action="/payment-complete" method="post">
+                    <div class="button-field">
+                        <input class="ui-button" type="submit" value="Оплатить"/>
+                        <input value="{{order.orderId}}" type="text" min="1" name="orderId" hidden/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<iframe name="hiddenFrame" width="0" height="0" border="0" hidden></iframe>
+<script src="https://kit.fontawesome.com/acdc25dc25.js" crossorigin="anonymous"></script>
+<script src="/js/catalogue-filter.js"></script>
+</body>
+</html>

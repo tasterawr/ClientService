@@ -7,12 +7,14 @@ import javax.servlet.http.Cookie;
 
 public class AccessTokenHandler {
 
-
     public static String getAccessToken(Cookie[] cookies){
-        for (Cookie cookie : cookies){
-            if (cookie.getName().equals("access_token"))
-                return cookie.getValue();
+        if (cookies != null){
+            for (Cookie cookie : cookies){
+                if (cookie.getName().equals("access_token"))
+                    return cookie.getValue();
+            }
         }
+
         return "";
     }
 

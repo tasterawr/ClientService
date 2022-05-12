@@ -9,10 +9,16 @@
 </head>
 <body>
 <header class="header">
-    <h2 class="header-title">Профиль пользователя {{customerInfo.username}}</h2>
-    <a href="#" class="navlink" target="_blank">Каталог</a>
-    <a href="/home" class="navlink" target="_blank">Профиль</a>
-    <a href="#" class="navlink" target="_blank">Корзина</a>
+    <div class="first-row">
+        <small class="small">Вы вошли как {{customerInfo.username}}</small>
+        <small><a href="/logout" id="logout-link">Выйти</a></small>
+    </div>
+    <div class="second-row">
+        <h2 class="header-title">Профиль пользователя {{customerInfo.username}}</h2>
+        <a href="/catalogue" class="navlink" target="">Каталог</a>
+        <a href="/home" class="navlink" target="">Профиль</a>
+        <a href="/basket" class="navlink" target="">Корзина</a>
+    </div>
 </header>
 <main class="container">
     <div class="info">
@@ -70,7 +76,7 @@
                     <label class="field">Логин:</label>
                     <label class="field-value">{{customerInfo.username}}</label>
                     <i class="fas fa-pen" id="edit-username-icon"></i>
-                    <form class="info-form" id="username-form" action="/update-info?param=username" method="post" target="hiddenFrame">
+                    <form class="info-form" id="username-form" action="/update-info?param=username" method="post">
                         <input class="input-field hidden" id="username-input" type="text" name="newValue" placeholder="Новый логин" required/>
                         <input class="update-info hidden" id="update-username-btn" type="submit" name="lastName" value="Сохранить"/>
                     </form>
@@ -78,8 +84,33 @@
                 <div class="fieldset-field">
                     <label class="field">Пароль</label>
                     <i class="fas fa-pen" id="edit-password-icon"></i>
+                    <form class="info-form" id="password-form" action="/update-info?param=password" method="post">
+                        <input class="input-field hidden" id="password-input" type="text" name="newValue" placeholder="Новый пароль" required/>
+                        <input class="update-info hidden" id="update-password-btn" type="submit" name="lastName" value="Сохранить"/>
+                    </form>
                 </div>
             </div>
+        </fieldset>
+        <fieldset class="info-fieldset" >
+            <legend class="legend">Способы оплаты</legend>
+            <form class="info-form" id="password-form" action="/update-info?param=paidtypes" method="post" target="hiddenFrame">
+                <div class="fieldset-inner-block paidTypes-info">
+                    {{#paidTypes}}
+                        <div class="fieldset-field">
+                            <label>{{name}}</label>
+                            {{#isChosen}}
+                                <input class="field" type="checkbox" name="{{name}}" style="" checked/>
+                            {{/isChosen}}
+                            {{^isChosen}}
+                                <input class="field" type="checkbox" name="{{name}}" style=""/>
+                            {{/isChosen}}
+                        </div>
+                    {{/paidTypes}}
+                    <input class="update-info fieldset-field" id="update-paidtypes-btn" type="submit" name="lastName" value="Сохранить"/>
+                </div>
+
+            </form>
+
         </fieldset>
     </div>
 </main>
