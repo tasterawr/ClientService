@@ -16,7 +16,7 @@ import java.util.Enumeration;
 public class ErrorHandlerController implements ErrorController {
 
     @RequestMapping("/error")
-    public ModelAndView handleError(HttpServletRequest request, @RequestBody ExceptionDto dto){
+    public ModelAndView handleError(HttpServletRequest request){
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         Enumeration<String> params = request.getParameterNames();
 

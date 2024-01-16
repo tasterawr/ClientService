@@ -3,14 +3,19 @@ package org.loktevik.netcracker.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.loktevik.netcracker.controllers.dto.*;
 import org.loktevik.netcracker.controllers.utils.URLProvider;
 import org.loktevik.netcracker.security.utils.AccessTokenHandler;
+import org.loktevik.netcracker.service.OrderService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,11 +27,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.Future;
 
 @Controller
 @RequiredArgsConstructor
 public class CustomerController {
     private final RestTemplate restTemplate;
+    private final OrderService orderService;
+    private final Logger logger = Logger.getLogger(CustomerController.class);
 
     @GetMapping("/home")
     public ModelAndView homePage(HttpServletRequest request) throws JsonProcessingException {
@@ -89,6 +97,7 @@ public class CustomerController {
         return "";
     }
 
+    @SneakyThrows
     @PostMapping("/create-order")
     public ResponseEntity<?> createOrder(HttpServletRequest request){
         String offerId = request.getParameter("offerId");
@@ -99,8 +108,13 @@ public class CustomerController {
 
         HttpEntity<OrderDto> nextRequest = AccessTokenHandler.getHttpEntity(orderInfo, request.getCookies());
         String url = URLProvider.getCustomerServiceUrl() + "/customers/orders";
-        restTemplate.postForEntity(url, nextRequest, Object.class);
+        Future<ResponseEntity> response = orderService.createNewOrderAsync(restTemplate, url, nextRequest);
 
+        while(!response.isDone()) {
+            logger.info("Запрос был отправлен. Идет обработка...");
+            Thread.sleep(1000);
+        }
+        logger.info("Заказ успешно создан.");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

@@ -63,6 +63,7 @@ public class EntryController {
             }
         }
         info.setPaidTypes(paidTypeNames.toArray(new String[0]));
+//        String url;
         HttpEntity<CustomerInfoDto> nextRequest = new HttpEntity<>(info);
         url = URLProvider.getCustomerServiceUrl() + "/customers";
         restTemplate.postForLocation(url, nextRequest, String.class);
